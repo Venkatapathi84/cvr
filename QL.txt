@@ -1,0 +1,69 @@
+class Node:
+    def __init__(self, data):
+        self.data = data  # Value of the node
+        self.next = None  # Pointer to the next node in the queue
+
+class Queue:
+    def __init__(self):
+        self.front = None  # Front of the queue
+        self.rear = None   # Rear of the queue
+        self.size = 0      # Track the size of the queue
+    
+    # Enqueue operation: Add a new element to the rear of the queue
+    def enqueue(self, data):
+        new_node = Node(data)  # Create a new node
+        if self.rear is None:  # If the queue is empty
+            self.front = self.rear = new_node
+        else:
+            self.rear.next = new_node  # Link the new node at the rear
+            self.rear = new_node       # Update the rear pointer
+        self.size += 1  # Increase the size of the queue
+    
+    # Dequeue operation: Remove an element from the front of the queue
+    def dequeue(self):
+        if self.isEmpty():  # If the queue is empty
+            print("Queue is empty!")
+            return None
+        dequeued_data = self.front.data
+        self.front = self.front.next  # Move the front pointer to the next node
+        if self.front is None:  # If the queue becomes empty after dequeue
+            self.rear = None
+        self.size -= 1  # Decrease the size of the queue
+        return dequeued_data
+    
+    # Peek at the front element without removing it
+    def front_element(self):
+        if self.isEmpty():
+            print("Queue is empty!")
+            return None
+        return self.front.data
+    
+    # Check if the queue is empty
+    def isEmpty(self):
+        return self.size == 0
+    
+    # Get the size of the queue
+    def queue_size(self):
+        return self.size
+    
+    # Print the queue elements (for debugging)
+    def print_queue(self):
+        temp = self.front
+        while temp:
+            print(temp.data, end=" ")
+            temp = temp.next
+        print()
+
+# Example usage:
+queue = Queue()
+
+queue.enqueue(10)
+queue.enqueue(20)
+queue.enqueue(30)
+queue.print_queue()  # Output: 10 20 30
+
+print("Dequeued:", queue.dequeue())  # Output: Dequeued: 10
+queue.print_queue()  # Output: 20 30
+
+print("Front Element:", queue.front_element())  # Output: Front Element: 20
+print("Queue Size:", queue.queue_size())  # Output: Queue Size: 2
